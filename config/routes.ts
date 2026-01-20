@@ -42,6 +42,12 @@
 		icon: 'OrderedListOutlined',
 		component: './TodoList',
 	},
+    {
+		path: '/Bai-tap-1', 
+		name: 'Bài tập 1',   
+		icon: 'shop',             
+		component: './QuanLySanPham', 
+	},
 
 	// DANH MUC HE THONG
 	// {
