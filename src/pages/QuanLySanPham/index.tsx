@@ -10,7 +10,6 @@ import {
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
-// --- DỮ LIỆU MẪU (Theo yêu cầu file BT2)  ---
 const sanPhamMau = [
   { id: 1, name: 'Laptop Dell XPS 13', category: 'Laptop', price: 25000000, quantity: 15 },
   { id: 2, name: 'iPhone 15 Pro Max', category: 'Điện thoại', price: 30000000, quantity: 8 },
@@ -37,10 +36,7 @@ const donHangMau = [
   }
 ];
 
-// --- COMPONENT CHÍNH ---
 const QuanLyCuaHang: React.FC = () => {
-  // --- STATE QUẢN LÝ DỮ LIỆU ---
-  // Khởi tạo state từ LocalStorage hoặc dùng dữ liệu mẫu 
   const [danhSachSanPham, setDanhSachSanPham] = useState(() => {
     const saved = localStorage.getItem('danhSachSanPham');
     return saved ? JSON.parse(saved) : sanPhamMau;
@@ -51,27 +47,23 @@ const QuanLyCuaHang: React.FC = () => {
     return saved ? JSON.parse(saved) : donHangMau;
   });
 
-  // --- STATE UI & FILTER ---
   const [activeTab, setActiveTab] = useState('dashboard');
   
-  // State cho Sản phẩm
   const [tuKhoaSP, setTuKhoaSP] = useState('');
   const [locDanhMuc, setLocDanhMuc] = useState<string | null>(null);
-  const [locTrangThaiSP, setLocTrangThaiSP] = useState<string | null>(null); // [cite: 39]
+  const [locTrangThaiSP, setLocTrangThaiSP] = useState<string | null>(null); 
   const [modalSP, setModalSP] = useState(false);
   const [spDangSua, setSpDangSua] = useState<any>(null);
 
-  // State cho Đơn hàng
   const [tuKhoaDH, setTuKhoaDH] = useState('');
   const [locTrangThaiDH, setLocTrangThaiDH] = useState<string | null>(null);
   const [modalDH, setModalDH] = useState(false);
-  const [chiTietDH, setChiTietDH] = useState<any>(null); // Để xem chi tiết modal
+  const [chiTietDH, setChiTietDH] = useState<any>(null); 
   const [modalChiTiet, setModalChiTiet] = useState(false);
 
   const [formSP] = Form.useForm();
   const [formDH] = Form.useForm();
 
-  // --- USE EFFECT: LƯU LOCAL STORAGE  ---
   useEffect(() => {
     localStorage.setItem('danhSachSanPham', JSON.stringify(danhSachSanPham));
   }, [danhSachSanPham]);
@@ -80,16 +72,12 @@ const QuanLyCuaHang: React.FC = () => {
     localStorage.setItem('danhSachDonHang', JSON.stringify(danhSachDonHang));
   }, [danhSachDonHang]);
 
-  // --- LOGIC: SẢN PHẨM ---
-  
-  // Hàm tính trạng thái sản phẩm [cite: 10, 11, 12, 13]
   const getTrangThaiSP = (qty: number) => {
     if (qty === 0) return { label: 'Hết hàng', color: 'red', value: 'out' };
     if (qty <= 10) return { label: 'Sắp hết', color: 'orange', value: 'low' };
     return { label: 'Còn hàng', color: 'green', value: 'stock' };
   };
 
-  // Filter & Sort Sản phẩm [cite: 36, 37, 53]
   const duLieuSPHienThi = useMemo(() => {
     return danhSachSanPham.filter((sp: any) => {
       const matchName = sp.name.toLowerCase().includes(tuKhoaSP.toLowerCase());
@@ -107,14 +95,12 @@ const QuanLyCuaHang: React.FC = () => {
 
   const xuLyLuuSP = (values: any) => {
     if (spDangSua) {
-      // Sửa [cite: 8]
       const danhSachMoi = danhSachSanPham.map((sp: any) => 
         sp.id === spDangSua.id ? { ...sp, ...values } : sp
       );
       setDanhSachSanPham(danhSachMoi);
       message.success('Cập nhật sản phẩm thành công!');
     } else {
-      // Thêm mới
       const sanPhamMoi = { id: Date.now(), ...values };
       setDanhSachSanPham([...danhSachSanPham, sanPhamMoi]);
       message.success('Thêm sản phẩm mới thành công!');
@@ -129,9 +115,6 @@ const QuanLyCuaHang: React.FC = () => {
     message.success('Đã xóa sản phẩm');
   };
 
-  // --- LOGIC: ĐƠN HÀNG ---
-
-  // Filter Đơn hàng [cite: 41, 42]
   const duLieuDHHienThi = useMemo(() => {
     return danhSachDonHang.filter((dh: any) => {
       const matchText = dh.customerName.toLowerCase().includes(tuKhoaDH.toLowerCase()) || 
@@ -141,10 +124,7 @@ const QuanLyCuaHang: React.FC = () => {
     });
   }, [danhSachDonHang, tuKhoaDH, locTrangThaiDH]);
 
-  // Tạo đơn hàng mới [cite: 20, 24, 31]
   const xuLyTaoDonHang = (values: any) => {
-    // values.products là mảng id sản phẩm user chọn
-    // Cần map sang chi tiết (tên, giá) và validate số lượng
     const chiTietDonHang = values.products.map((item: any) => {
       const spKho = danhSachSanPham.find((s: any) => s.id === item.productId);
       return {
@@ -155,7 +135,6 @@ const QuanLyCuaHang: React.FC = () => {
       };
     });
 
-    // Validate tồn kho [cite: 24]
     for (let item of chiTietDonHang) {
       const spKho = danhSachSanPham.find((s: any) => s.id === item.productId);
       if (item.quantity > spKho.quantity) {
@@ -167,33 +146,30 @@ const QuanLyCuaHang: React.FC = () => {
     const tongTien = chiTietDonHang.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0);
 
     const donHangMoi = {
-      id: `DH${Date.now()}`, // Mã đơn hàng tự sinh
+      id: `DH${Date.now()}`, 
       customerName: values.customerName,
       phone: values.phone,
       address: values.address,
       products: chiTietDonHang,
       totalAmount: tongTien,
-      status: 'Chờ xử lý', // Trạng thái mặc định [cite: 28]
+      status: 'Chờ xử lý', 
       createdAt: dayjs().format('YYYY-MM-DD')
     };
 
-    setDanhSachDonHang([donHangMoi, ...danhSachDonHang]); // Mới nhất lên đầu [cite: 54]
+    setDanhSachDonHang([donHangMoi, ...danhSachDonHang]);
     setModalDH(false);
     formDH.resetFields();
     message.success('Tạo đơn hàng thành công!');
   };
 
-  // Cập nhật trạng thái đơn hàng & Trừ kho 
   const capNhatTrangThaiDH = (maDonHang: string, trangThaiMoi: string) => {
     const donHangCu = danhSachDonHang.find((dh: any) => dh.id === maDonHang);
     if (!donHangCu) return;
 
     const trangThaiCu = donHangCu.status;
     
-    // Logic cập nhật kho
     let danhSachSPMoi = [...danhSachSanPham];
     
-    // TH1: Chuyển sang "Hoàn thành" -> Trừ kho 
     if (trangThaiMoi === 'Hoàn thành' && trangThaiCu !== 'Hoàn thành') {
       donHangCu.products.forEach((item: any) => {
         const index = danhSachSPMoi.findIndex(sp => sp.id === item.productId);
@@ -202,7 +178,6 @@ const QuanLyCuaHang: React.FC = () => {
         }
       });
     } 
-    // TH2: Từ "Hoàn thành" chuyển sang "Đã hủy" (Khách trả hàng) -> Cộng lại kho 
     else if (trangThaiCu === 'Hoàn thành' && trangThaiMoi === 'Đã hủy') {
       donHangCu.products.forEach((item: any) => {
         const index = danhSachSPMoi.findIndex(sp => sp.id === item.productId);
@@ -214,15 +189,12 @@ const QuanLyCuaHang: React.FC = () => {
 
     setDanhSachSanPham(danhSachSPMoi);
     
-    // Cập nhật trạng thái đơn
     const danhSachDHMoi = danhSachDonHang.map((dh: any) => 
       dh.id === maDonHang ? { ...dh, status: trangThaiMoi } : dh
     );
     setDanhSachDonHang(danhSachDHMoi);
     message.success(`Đã cập nhật trạng thái đơn ${maDonHang}`);
   };
-
-  // --- DEFINITION CÁC CỘT TABLE ---
   
   const cotSanPham = [
     { title: 'STT', key: 'stt', render: (_:any, __:any, i:number) => i + 1, width: 50 },
@@ -257,7 +229,7 @@ const QuanLyCuaHang: React.FC = () => {
   const cotDonHang = [
     { title: 'Mã ĐH', dataIndex: 'id', key: 'id' },
     { title: 'Khách hàng', dataIndex: 'customerName', key: 'customerName' },
-    { title: 'Ngày tạo', dataIndex: 'createdAt', key: 'createdAt', sorter: (a:any, b:any) => dayjs(a.createdAt).unix() - dayjs(b.createdAt).unix() }, // [cite: 54]
+    { title: 'Ngày tạo', dataIndex: 'createdAt', key: 'createdAt', sorter: (a:any, b:any) => dayjs(a.createdAt).unix() - dayjs(b.createdAt).unix() },
     { title: 'Tổng tiền', dataIndex: 'totalAmount', key: 'totalAmount', sorter: (a:any, b:any) => a.totalAmount - b.totalAmount,
       render: (val: number) => <b style={{color: 'red'}}>{val.toLocaleString('vi-VN')} đ</b> },
     { title: 'Trạng thái', dataIndex: 'status', key: 'status',
@@ -265,7 +237,7 @@ const QuanLyCuaHang: React.FC = () => {
         <Select 
           value={status} 
           style={{ width: 120 }} 
-          onChange={(val) => capNhatTrangThaiDH(record.id, val)} // [cite: 30]
+          onChange={(val) => capNhatTrangThaiDH(record.id, val)} 
         >
           <Select.Option value="Chờ xử lý">Chờ xử lý</Select.Option>
           <Select.Option value="Đang giao">Đang giao</Select.Option>
@@ -278,17 +250,14 @@ const QuanLyCuaHang: React.FC = () => {
       <Button icon={<EyeOutlined />} onClick={() => {
         setChiTietDH(record);
         setModalChiTiet(true);
-      }}>Chi tiết</Button> // [cite: 33]
+      }}>Chi tiết</Button> 
     )}
   ];
 
-  // --- RENDER GIAO DIỆN ---
   return (
     <div style={{ padding: 24, background: '#f0f2f5', minHeight: '100vh' }}>
       <Card title="HỆ THỐNG QUẢN LÝ CỬA HÀNG" bordered={false}>
         <Tabs activeKey={activeTab} onChange={setActiveTab}>
-          
-          {/* TAB 1: DASHBOARD  */}
           <Tabs.TabPane tab="Thống kê Tổng quan" key="dashboard">
             <Row gutter={16}>
               <Col span={6}>
@@ -301,7 +270,6 @@ const QuanLyCuaHang: React.FC = () => {
                 <Statistic title="Tổng đơn hàng" value={danhSachDonHang.length} prefix={<ShoppingCartOutlined />} />
               </Col>
               <Col span={6}>
-                {/* [cite: 49] Chỉ tính đơn hoàn thành */}
                 <Statistic title="Doanh thu thực tế" valueStyle={{ color: '#3f8600' }}
                   value={danhSachDonHang.filter((dh:any) => dh.status === 'Hoàn thành').reduce((sum:number, dh:any) => sum + dh.totalAmount, 0)} suffix="đ" 
                 />
@@ -309,7 +277,6 @@ const QuanLyCuaHang: React.FC = () => {
             </Row>
           </Tabs.TabPane>
 
-          {/* TAB 2: QUẢN LÝ SẢN PHẨM [cite: 5] */}
           <Tabs.TabPane tab="Quản lý Sản phẩm" key="products">
             <Space style={{ marginBottom: 16 }}>
               <Input placeholder="Tìm tên sản phẩm" prefix={<SearchOutlined />} onChange={e => setTuKhoaSP(e.target.value)} />
@@ -323,10 +290,9 @@ const QuanLyCuaHang: React.FC = () => {
               </Select>
               <Button type="primary" icon={<PlusOutlined />} onClick={() => setModalSP(true)}>Thêm mới</Button>
             </Space>
-            <Table dataSource={duLieuSPHienThi} columns={cotSanPham as any} rowKey="id" pagination={{ pageSize: 5 }} /> {/* [cite: 9] */}
+            <Table dataSource={duLieuSPHienThi} columns={cotSanPham as any} rowKey="id" pagination={{ pageSize: 5 }} /> 
           </Tabs.TabPane>
 
-          {/* TAB 3: QUẢN LÝ ĐƠN HÀNG [cite: 15] */}
           <Tabs.TabPane tab="Quản lý Đơn hàng" key="orders">
             <Space style={{ marginBottom: 16 }}>
               <Input placeholder="Tìm khách hàng / Mã ĐH" prefix={<SearchOutlined />} onChange={e => setTuKhoaDH(e.target.value)} />
@@ -343,7 +309,6 @@ const QuanLyCuaHang: React.FC = () => {
         </Tabs>
       </Card>
 
-      {/* --- MODAL SẢN PHẨM (Thêm/Sửa) --- */}
       <Modal title={spDangSua ? "Sửa sản phẩm" : "Thêm sản phẩm"} visible={modalSP} onCancel={() => setModalSP(false)} onOk={() => formSP.submit()}>
         <Form form={formSP} layout="vertical" onFinish={xuLyLuuSP}>
           <Form.Item name="name" label="Tên sản phẩm" rules={[{ required: true }]}>
@@ -366,7 +331,6 @@ const QuanLyCuaHang: React.FC = () => {
         </Form>
       </Modal>
 
-      {/* --- MODAL TẠO ĐƠN HÀNG [cite: 17] --- */}
       <Modal title="Tạo đơn hàng mới" visible={modalDH} onCancel={() => setModalDH(false)} onOk={() => formDH.submit()} width={700}>
         <Form form={formDH} layout="vertical" onFinish={xuLyTaoDonHang}>
           <Row gutter={16}>
@@ -376,7 +340,6 @@ const QuanLyCuaHang: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              {/* [cite: 25] Validation số điện thoại */}
               <Form.Item name="phone" label="Số điện thoại" rules={[{ required: true, pattern: /^\d{10,11}$/, message: 'SĐT không hợp lệ' }]}>
                 <Input />
               </Form.Item>
@@ -386,7 +349,6 @@ const QuanLyCuaHang: React.FC = () => {
             <Input />
           </Form.Item>
 
-          {/* Dynamic Form để chọn nhiều sản phẩm + số lượng [cite: 18, 19] */}
           <Form.List name="products" initialValue={[{}]}>
             {(fields, { add, remove }) => (
               <>
@@ -427,7 +389,6 @@ const QuanLyCuaHang: React.FC = () => {
         </Form>
       </Modal>
 
-      {/* --- MODAL CHI TIẾT ĐƠN HÀNG [cite: 33] --- */}
       <Modal title="Chi tiết đơn hàng" visible={modalChiTiet} onCancel={() => setModalChiTiet(false)} footer={null}>
         {chiTietDH && (
           <div>
@@ -456,7 +417,6 @@ const QuanLyCuaHang: React.FC = () => {
   );
 };
 
-// Icon xóa dòng trong Form
 const MinusCircleOutlined = (props: any) => <span {...props} style={{cursor: 'pointer', color: 'red'}}><DeleteOutlined /></span>;
 
 export default QuanLyCuaHang;
