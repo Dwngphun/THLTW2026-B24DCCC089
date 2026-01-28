@@ -43,8 +43,8 @@
 		component: './TodoList',
 	},
     {
-		path: '/Bai-tap-1', 
-		name: 'Bài tập 1',   
+		path: '/Bai-tap-2', 
+		name: 'Bài tập 2',   
 		icon: 'shop',             
 		component: './QuanLySanPham', 
 	},
