@@ -24,30 +24,42 @@
 		component: './TrangChu',
 		icon: 'HomeOutlined',
 	},
-	{
-		path: '/gioi-thieu',
-		name: 'About',
-		component: './TienIch/GioiThieu',
-		hideInMenu: true,
-	},
-	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
-	},
-	{
-		path: '/todo-list',
-		name: 'TodoList',
-		icon: 'OrderedListOutlined',
-		component: './TodoList',
-	},
+	// {
+	// 	path: '/gioi-thieu',
+	// 	name: 'About',
+	// 	component: './TienIch/GioiThieu',
+	// 	hideInMenu: true,
+	// },
+	// {
+	// 	path: '/random-user',
+	// 	name: 'RandomUser',
+	// 	component: './RandomUser',
+	// 	icon: 'ArrowsAltOutlined',
+	// },
+	// {
+	// 	path: '/todo-list',
+	// 	name: 'TodoList',
+	// 	icon: 'OrderedListOutlined',
+	// 	component: './TodoList',
+	// },
     {
 		path: '/Bai-tap-2', 
 		name: 'Bài tập 2',   
 		icon: 'shop',             
 		component: './QuanLySanPham', 
 	},
+	{
+        path: '/Doan-so-ngau-nhien',
+        name: 'TH01BT1-Trò chơi đoán số',
+	    icon: 'ControlOutlined',
+        component: './DoanSo',
+    },
+	{
+        path: '/quan-ly-hoc-tap',
+        name: 'TH01BT2-Quản lý học tập',
+        icon: 'BookOutlined',
+        component: './QuanLyHocTap',
+    },
 
 	// DANH MUC HE THONG
 	// {
