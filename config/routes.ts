@@ -60,6 +60,18 @@
         icon: 'BookOutlined',
         component: './QuanLyHocTap',
     },
+	{
+        path: '/oan-tu-ti',
+        name: 'TH02BT1-Oẳn tù tì',
+        icon: 'ControlOutlined',
+        component: './OanTuTi',
+    },
+	{
+        path: '/ngan-hang-tu-luan',
+        name: 'TH02BT2-Ngân hàng tự luận',
+        icon: 'BookOutlined',
+        component: './NganHangTuLuan',
+    },
 
 	// DANH MUC HE THONG
 	// {
