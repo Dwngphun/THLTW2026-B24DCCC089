@@ -72,6 +72,12 @@
         icon: 'BookOutlined',
         component: './NganHangTuLuan',
     },
+	{
+        path: '/quan-ly-spa',
+        name: 'TH03-Quản lý Spa',
+        icon: 'shop',
+        component: './QuanLySpa',
+    },
 
 	// DANH MUC HE THONG
 	// {
