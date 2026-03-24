@@ -78,6 +78,12 @@
         icon: 'shop',
         component: './QuanLySpa',
     },
+	{
+        path: '/quan-ly-van-bang',
+        name: 'TH04-Quản lý văn bằng',
+        icon: 'BookOutlined',
+        component: './QuanLyVanBang',
+    },
 
 	// DANH MUC HE THONG
 	// {
