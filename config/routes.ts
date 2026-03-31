@@ -84,6 +84,12 @@
         icon: 'BookOutlined',
         component: './QuanLyVanBang',
     },
+	{
+        path: '/quan-ly-clb',
+        name: 'TH05-Quản lý CLB',
+        icon: 'BookOutlined',
+        component: './QuanLyCLB',
+    },
 
 	// DANH MUC HE THONG
 	// {
