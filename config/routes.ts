@@ -90,6 +90,41 @@
         icon: 'BookOutlined',
         component: './QuanLyCLB',
     },
+	{
+    path: '/du-lich',
+    name: 'Quản lý Du lịch',     // Tên menu cha hiển thị ở thanh bên trái
+    icon: 'GlobalOutlined',      // Icon của menu cha
+    routes: [
+      { 
+        path: '/du-lich', 
+        redirect: '/du-lich/trang-chu' 
+      },
+      { 
+        path: '/du-lich/trang-chu', 
+        name: 'Khám phá',        // Tên menu con
+        icon: 'CompassOutlined',
+        component: '@/pages/DuLich/TrangChu' 
+      },
+      { 
+        path: '/du-lich/lap-ke-hoach', 
+        name: 'Lịch trình', 
+        icon: 'CalendarOutlined',
+        component: '@/pages/DuLich/LapKeHoach' 
+      },
+      { 
+        path: '/du-lich/ngan-sach', 
+        name: 'Ngân sách', 
+        icon: 'WalletOutlined',
+        component: '@/pages/DuLich/NganSach' 
+      },
+      { 
+        path: '/du-lich/quan-tri', 
+        name: 'Quản trị (Admin)', 
+        icon: 'SettingOutlined',
+        component: '@/pages/DuLich/QuanTri' 
+      },
+    ],
+  },
 
 	// DANH MUC HE THONG
 	// {
