@@ -123,8 +123,14 @@
         icon: 'SettingOutlined',
         component: '@/pages/DuLich/QuanTri' 
       },
-    ],
-  },
+      ],
+    },
+    {
+        path: '/quan-ly-khoa-hoc',
+        name: 'KTGK-Quản lý khóa học',
+        icon: 'BookOutlined',
+        component: './QuanLyKhoaHoc',
+    },
 
 	// DANH MUC HE THONG
 	// {

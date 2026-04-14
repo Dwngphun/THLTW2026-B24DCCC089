@@ -1,0 +1,15 @@
+.nut-them-moi-do {
+  background-color: #ff4d4f !important; 
+  border-color: #ff4d4f !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease; 
+}
+
+.nut-them-moi-do:hover {
+  background-color: #ffffff !important;
+  color: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+}
