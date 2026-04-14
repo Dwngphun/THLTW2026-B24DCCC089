@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Modal, Form, Input, InputNumber, Select, message } from 'antd';
 import { KhoaHoc, DANH_SACH_GIANG_VIEN, DANH_SACH_TRANG_THAI } from '../types';
+import TrinhSoanThao from './TrinhSoanThao'; // Import component tự chế
 
 const { Option } = Select;
 
@@ -34,6 +35,12 @@ const ModalKhoaHoc: React.FC<ModalKhoaHocProps> = ({ isVisible, onClose, onSave,
 
   const xuLyLuu = () => {
     form.validateFields().then((values) => {
+      // Chặn nếu người dùng chỉ nhập khoảng trắng hoặc chưa nhập gì vào Editor
+      if (!values.moTa || values.moTa.trim() === '' || values.moTa === '<br>') {
+        message.error('Không được để trống mô tả!');
+        return;
+      }
+      
       const duLieuLuu: KhoaHoc = {
         ...values,
         idKhoaHoc: khoaHocDangSua ? khoaHocDangSua.idKhoaHoc : taoIdTuDong(),
@@ -53,7 +60,7 @@ const ModalKhoaHoc: React.FC<ModalKhoaHocProps> = ({ isVisible, onClose, onSave,
       onOk={xuLyLuu}
       okText="Lưu lại"
       cancelText="Hủy bỏ"
-      width={700}
+      width={750}
     >
       <Form form={form} layout="vertical">
         <Form.Item
@@ -94,7 +101,7 @@ const ModalKhoaHoc: React.FC<ModalKhoaHocProps> = ({ isVisible, onClose, onSave,
           label="Số lượng học viên"
           rules={[{ required: true, message: 'Vui lòng nhập số lượng học viên!' }]}
         >
-          <InputNumber min={0} precision={0} style={{ width: '100%' }} placeholder="Nhập số lượng học viên" />
+          <InputNumber min={0} precision={0} style={{ width: '100%' }} placeholder="Nhập số nguyên >= 0" />
         </Form.Item>
 
         <Form.Item
@@ -109,12 +116,13 @@ const ModalKhoaHoc: React.FC<ModalKhoaHocProps> = ({ isVisible, onClose, onSave,
           </Select>
         </Form.Item>
 
+        {/* THAY THẾ BẰNG COMPONENT TỰ CHẾ Ở ĐÂY */}
         <Form.Item
           name="moTa"
           label="Mô tả khóa học"
           rules={[{ required: true, message: 'Không được để trống mô tả!' }]}
         >
-          <Input.TextArea rows={4} placeholder="Nhập mô tả " />
+          <TrinhSoanThao />
         </Form.Item>
       </Form>
     </Modal>
