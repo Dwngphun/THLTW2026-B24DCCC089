@@ -131,6 +131,46 @@
         icon: 'BookOutlined',
         component: './QuanLyKhoaHoc',
     },
+    {
+  path: '/quan-ly-blog',
+  name: 'Quản lý Blog',     // Tên menu cha hiển thị ở thanh bên trái
+  icon: 'ReadOutlined',     // Icon của menu cha
+  routes: [
+    { 
+      path: '/quan-ly-blog', 
+      redirect: '/quan-ly-blog/trang-chu' 
+    },
+    { 
+      path: '/quan-ly-blog/trang-chu', 
+      name: 'Trang chủ',        
+      icon: 'HomeOutlined',
+      component: '@/pages/QuanLyBlog/TrangChu' 
+    },
+    { 
+      // Không có name/icon để ẩn khỏi Sidebar, nhưng vẫn truy cập được
+      path: '/quan-ly-blog/bai-viet/:slug', 
+      component: '@/pages/QuanLyBlog/ChiTietBaiViet' 
+    },
+    { 
+      path: '/quan-ly-blog/gioi-thieu', 
+      name: 'Giới thiệu', 
+      icon: 'UserOutlined',
+      component: '@/pages/QuanLyBlog/GioiThieu' 
+    },
+    { 
+      path: '/quan-ly-blog/quan-ly-bai-viet', 
+      name: 'Bài viết', 
+      icon: 'FileTextOutlined',
+      component: '@/pages/QuanLyBlog/QuanLyBaiViet' 
+    },
+    { 
+      path: '/quan-ly-blog/quan-ly-the', 
+      name: 'Thẻ', 
+      icon: 'TagsOutlined',
+      component: '@/pages/QuanLyBlog/QuanLyThe' 
+    },
+  ],
+},
 
 	// DANH MUC HE THONG
 	// {
