@@ -171,6 +171,19 @@
     },
   ],
 },
+{
+  path: '/the-duc',
+  name: 'Theo dõi Sức khỏe',
+  icon: 'HeartOutlined',
+  routes: [
+    { path: '/the-duc', redirect: '/the-duc/trang-chu' },
+    { path: '/the-duc/trang-chu', name: 'Dashboard', component: '@/pages/TheDuc/index' },
+    { path: '/the-duc/nhat-ky-tap-luyen', name: 'Nhật ký tập luyện', component: '@/pages/TheDuc/index' },
+    { path: '/the-duc/nhat-ky-chi-so', name: 'Chỉ số sức khỏe', component: '@/pages/TheDuc/index' },
+    { path: '/the-duc/muc-tieu', name: 'Quản lý mục tiêu', component: '@/pages/TheDuc/index' },
+    { path: '/the-duc/thu-vien', name: 'Thư viện bài tập', component: '@/pages/TheDuc/index' },
+  ],
+},
 
 	// DANH MUC HE THONG
 	// {
