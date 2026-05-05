@@ -184,6 +184,17 @@
     { path: '/the-duc/thu-vien', name: 'Thư viện bài tập', component: '@/pages/TheDuc/index' },
   ],
 },
+{
+  path: '/cong-viec',
+  name: 'Quản lý Công việc',
+  icon: 'ProjectOutlined',
+  routes: [
+    { path: '/cong-viec', redirect: '/cong-viec/dashboard' },
+    { path: '/cong-viec/dashboard', name: 'Dashboard', component: '@/pages/CongViec/index' },
+    { path: '/cong-viec/kanban', name: 'Kanban Board', component: '@/pages/CongViec/index' },
+    { path: '/cong-viec/danh-sach', name: 'Danh sách Task', component: '@/pages/CongViec/index' },
+  ],
+},
 
 	// DANH MUC HE THONG
 	// {
